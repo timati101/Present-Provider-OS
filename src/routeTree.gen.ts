@@ -13,6 +13,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ShutdownRouteImport } from './routes/shutdown'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ChallengesRouteImport } from './routes/challenges'
 import { Route as BrotherhoodRouteImport } from './routes/brotherhood'
 import { Route as IndexRouteImport } from './routes/index'
@@ -39,6 +40,11 @@ const ResourcesRoute = ResourcesRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChallengesRoute = ChallengesRouteImport.update({
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/brotherhood': typeof BrotherhoodRoute
   '/challenges': typeof ChallengesRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/resources': typeof ResourcesRoute
   '/shutdown': typeof ShutdownRoute
@@ -95,6 +102,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/brotherhood': typeof BrotherhoodRoute
   '/challenges': typeof ChallengesRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/resources': typeof ResourcesRoute
   '/shutdown': typeof ShutdownRoute
@@ -109,6 +117,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/brotherhood': typeof BrotherhoodRoute
   '/challenges': typeof ChallengesRoute
+  '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
   '/resources': typeof ResourcesRoute
   '/shutdown': typeof ShutdownRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/'
     | '/brotherhood'
     | '/challenges'
+    | '/dashboard'
     | '/login'
     | '/resources'
     | '/shutdown'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/'
     | '/brotherhood'
     | '/challenges'
+    | '/dashboard'
     | '/login'
     | '/resources'
     | '/shutdown'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/'
     | '/brotherhood'
     | '/challenges'
+    | '/dashboard'
     | '/login'
     | '/resources'
     | '/shutdown'
@@ -164,6 +176,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BrotherhoodRoute: typeof BrotherhoodRoute
   ChallengesRoute: typeof ChallengesRoute
+  DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
   ResourcesRoute: typeof ResourcesRoute
   ShutdownRoute: typeof ShutdownRoute
@@ -202,6 +215,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/challenges': {
@@ -260,6 +280,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BrotherhoodRoute: BrotherhoodRoute,
   ChallengesRoute: ChallengesRoute,
+  DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
   ResourcesRoute: ResourcesRoute,
   ShutdownRoute: ShutdownRoute,
