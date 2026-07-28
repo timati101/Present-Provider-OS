@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body {
+    @apply bg-[#faf7f2] text-gray-800 antialiased;
+  }
+
+  ::selection {
+    @apply bg-amber-200 text-gray-900;
+  }
+}
