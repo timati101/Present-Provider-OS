@@ -9,8 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ShutdownRouteImport } from './routes/shutdown'
 import { Route as ResourcesRouteImport } from './routes/resources'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ChallengesRouteImport } from './routes/challenges'
 import { Route as BrotherhoodRouteImport } from './routes/brotherhood'
 import { Route as IndexRouteImport } from './routes/index'
@@ -19,6 +21,11 @@ import { Route as ApiSetupRouteImport } from './routes/api.setup'
 import { Route as CurriculumModuleIdIndexRouteImport } from './routes/curriculum/$moduleId/index'
 import { Route as CurriculumModuleIdLessonIdIndexRouteImport } from './routes/curriculum/$moduleId/$lessonId/index'
 
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ShutdownRoute = ShutdownRouteImport.update({
   id: '/shutdown',
   path: '/shutdown',
@@ -27,6 +34,11 @@ const ShutdownRoute = ShutdownRouteImport.update({
 const ResourcesRoute = ResourcesRouteImport.update({
   id: '/resources',
   path: '/resources',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChallengesRoute = ChallengesRouteImport.update({
@@ -70,8 +82,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/brotherhood': typeof BrotherhoodRoute
   '/challenges': typeof ChallengesRoute
+  '/login': typeof LoginRoute
   '/resources': typeof ResourcesRoute
   '/shutdown': typeof ShutdownRoute
+  '/signup': typeof SignupRoute
   '/api/setup': typeof ApiSetupRoute
   '/curriculum/': typeof CurriculumIndexRoute
   '/curriculum/$moduleId/': typeof CurriculumModuleIdIndexRoute
@@ -81,8 +95,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/brotherhood': typeof BrotherhoodRoute
   '/challenges': typeof ChallengesRoute
+  '/login': typeof LoginRoute
   '/resources': typeof ResourcesRoute
   '/shutdown': typeof ShutdownRoute
+  '/signup': typeof SignupRoute
   '/api/setup': typeof ApiSetupRoute
   '/curriculum': typeof CurriculumIndexRoute
   '/curriculum/$moduleId': typeof CurriculumModuleIdIndexRoute
@@ -93,8 +109,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/brotherhood': typeof BrotherhoodRoute
   '/challenges': typeof ChallengesRoute
+  '/login': typeof LoginRoute
   '/resources': typeof ResourcesRoute
   '/shutdown': typeof ShutdownRoute
+  '/signup': typeof SignupRoute
   '/api/setup': typeof ApiSetupRoute
   '/curriculum/': typeof CurriculumIndexRoute
   '/curriculum/$moduleId/': typeof CurriculumModuleIdIndexRoute
@@ -106,8 +124,10 @@ export interface FileRouteTypes {
     | '/'
     | '/brotherhood'
     | '/challenges'
+    | '/login'
     | '/resources'
     | '/shutdown'
+    | '/signup'
     | '/api/setup'
     | '/curriculum/'
     | '/curriculum/$moduleId/'
@@ -117,8 +137,10 @@ export interface FileRouteTypes {
     | '/'
     | '/brotherhood'
     | '/challenges'
+    | '/login'
     | '/resources'
     | '/shutdown'
+    | '/signup'
     | '/api/setup'
     | '/curriculum'
     | '/curriculum/$moduleId'
@@ -128,8 +150,10 @@ export interface FileRouteTypes {
     | '/'
     | '/brotherhood'
     | '/challenges'
+    | '/login'
     | '/resources'
     | '/shutdown'
+    | '/signup'
     | '/api/setup'
     | '/curriculum/'
     | '/curriculum/$moduleId/'
@@ -140,8 +164,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BrotherhoodRoute: typeof BrotherhoodRoute
   ChallengesRoute: typeof ChallengesRoute
+  LoginRoute: typeof LoginRoute
   ResourcesRoute: typeof ResourcesRoute
   ShutdownRoute: typeof ShutdownRoute
+  SignupRoute: typeof SignupRoute
   ApiSetupRoute: typeof ApiSetupRoute
   CurriculumIndexRoute: typeof CurriculumIndexRoute
   CurriculumModuleIdIndexRoute: typeof CurriculumModuleIdIndexRoute
@@ -150,6 +176,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/shutdown': {
       id: '/shutdown'
       path: '/shutdown'
@@ -162,6 +195,13 @@ declare module '@tanstack/react-router' {
       path: '/resources'
       fullPath: '/resources'
       preLoaderRoute: typeof ResourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/challenges': {
@@ -220,8 +260,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BrotherhoodRoute: BrotherhoodRoute,
   ChallengesRoute: ChallengesRoute,
+  LoginRoute: LoginRoute,
   ResourcesRoute: ResourcesRoute,
   ShutdownRoute: ShutdownRoute,
+  SignupRoute: SignupRoute,
   ApiSetupRoute: ApiSetupRoute,
   CurriculumIndexRoute: CurriculumIndexRoute,
   CurriculumModuleIdIndexRoute: CurriculumModuleIdIndexRoute,

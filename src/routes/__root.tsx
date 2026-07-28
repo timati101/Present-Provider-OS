@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
+import { AuthProvider } from "~/components/AuthContext";
 import { Nav } from "~/components/Nav";
 import appCss from "~/styles/app.css?url";
 
@@ -25,8 +26,10 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <RootDocument>
-      <Nav />
-      <Outlet />
+      <AuthProvider>
+        <Nav />
+        <Outlet />
+      </AuthProvider>
     </RootDocument>
   );
 }

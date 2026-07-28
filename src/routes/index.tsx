@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { readFile } from "node:fs/promises";
-import { useState } from "react";
 
 const getBusinessName = createServerFn({ method: "GET" }).handler(async () => {
   try {
@@ -181,56 +180,6 @@ const features = [
   },
 ];
 
-/* ── Email form component ────────────────────────────────── */
-function EmailForm({ variant }: { variant: "hero" | "cta" }) {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const isHero = variant === "hero";
-
-  if (submitted) {
-    return (
-      <div className="rounded-xl border border-amber-200 bg-amber-50 px-6 py-5 text-center">
-        <p className="text-lg font-semibold text-amber-800">
-          Thanks! We'll be in touch.
-        </p>
-        <p className="mt-1 text-sm text-amber-700">
-          Early access details are headed your way.
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (email.trim()) setSubmitted(true);
-      }}
-      className={`flex w-full max-w-md flex-col gap-3 sm:flex-row ${
-        isHero ? "" : "mx-auto"
-      }`}
-    >
-      <input
-        type="email"
-        required
-        placeholder="Enter your email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className={`flex-1 rounded-xl border border-gray-300 px-5 py-3.5 text-base text-gray-900 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30 ${
-          isHero ? "bg-white" : "bg-white"
-        }`}
-      />
-      <button
-        type="submit"
-        className="cursor-pointer rounded-xl bg-amber-500 px-6 py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 active:bg-amber-700 sm:whitespace-nowrap"
-      >
-        Get early access
-      </button>
-    </form>
-  );
-}
-
 /* ── Main component ─────────────────────────────────────── */
 function Home() {
   const businessName = Route.useLoaderData();
@@ -256,10 +205,15 @@ function Home() {
             the provider your family actually needs: a present one.
           </p>
           <div className="mt-10 flex justify-center">
-            <EmailForm variant="hero" />
+            <a
+              href="/signup"
+              className="inline-block rounded-xl bg-amber-500 px-8 py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 active:bg-amber-700"
+            >
+              Get started free
+            </a>
           </div>
           <p className="mt-4 text-sm text-gray-500">
-            Join the waitlist. No spam, just early access.
+            No credit card required. Start building presence today.
           </p>
         </div>
       </header>
@@ -407,7 +361,12 @@ function Home() {
             commitment — just a system that works as hard as you do.
           </p>
           <div className="mt-10">
-            <EmailForm variant="cta" />
+            <a
+              href="/signup"
+              className="inline-block rounded-xl bg-amber-500 px-8 py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 active:bg-amber-700"
+            >
+              Get started free
+            </a>
           </div>
         </div>
       </section>
