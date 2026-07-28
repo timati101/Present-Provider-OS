@@ -73,11 +73,18 @@ function DashboardPage() {
 
   /* Load persisted data on mount */
   useEffect(() => {
-    // Streak
+    // Streak (supports both legacy number and new JSON format)
     const savedStreak = localStorage.getItem("shutdown-streak");
     if (savedStreak) {
-      const n = parseInt(savedStreak, 10);
-      if (!isNaN(n)) setStreak(n);
+      try {
+        const parsed = JSON.parse(savedStreak);
+        if (typeof parsed.streak === "number") {
+          setStreak(parsed.streak);
+        }
+      } catch {
+        const n = parseInt(savedStreak, 10);
+        if (!isNaN(n)) setStreak(n);
+      }
     }
 
     // Completed lessons
