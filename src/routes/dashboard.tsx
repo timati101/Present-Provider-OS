@@ -2,6 +2,7 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { useAuth } from "~/components/AuthContext";
 import { ProgressBar } from "~/components/ProgressBar";
+import { getCompletedLessons } from "~/lib/progress-fns";
 
 export const Route = createFileRoute("/dashboard")({
   component: DashboardPage,
@@ -87,16 +88,20 @@ function DashboardPage() {
       }
     }
 
-    // Completed lessons
-    const savedLessons = localStorage.getItem("completed-lessons");
-    if (savedLessons) {
-      try {
-        const arr = JSON.parse(savedLessons);
-        if (Array.isArray(arr)) setCompletedLessons(arr);
-      } catch {
-        /* ignore corrupt data */
-      }
-    }
+    // Completed lessons — server-first, localStorage fallback
+    getCompletedLessons()
+      .then((r) => setCompletedLessons(r.completedLessonIds))
+      .catch(() => {
+        const savedLessons = localStorage.getItem("completed-lessons");
+        if (savedLessons) {
+          try {
+            const arr = JSON.parse(savedLessons);
+            if (Array.isArray(arr)) setCompletedLessons(arr);
+          } catch {
+            /* ignore corrupt data */
+          }
+        }
+      })
 
     // Daily intention
     const savedIntention = localStorage.getItem("daily-intention");

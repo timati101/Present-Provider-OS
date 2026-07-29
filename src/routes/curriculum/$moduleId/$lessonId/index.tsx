@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect, useCallback } from "react";
+import { useAuth } from "~/components/AuthContext";
+import { toggleLessonComplete } from "~/lib/progress-fns";
 import { createServerFn } from "@tanstack/react-start";
-import { useState } from "react";
 import { sql } from "~/db";
 import { titleToSlug } from "~/lib/slugs";
 import { Checklist } from "~/components/Checklist";
@@ -194,7 +196,7 @@ function LessonDetailPage() {
     );
   }
 
-  const { module: mod, lesson, allLessons } = data;
+  const { module: mod, allLessons } = data;
 
   // ── Prev / Next ─────────────────────────────────────────
   const currentIndex = allLessons.findIndex((l) => l.id === lesson.id);
@@ -359,8 +361,9 @@ function LessonDetailPage() {
         <section className="mb-16 text-center">
           {!markedComplete ? (
             <button
-              onClick={() => setMarkedComplete(true)}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#0f1d36] px-8 py-4 text-lg font-bold text-amber-400 transition hover:bg-[#0f1d36]/90 hover:shadow-lg active:scale-[0.98]"
+              onClick={handleToggleComplete}
+              disabled={toggling}
+              className="inline-flex items-center gap-2 rounded-xl bg-[#0f1d36] px-8 py-4 text-lg font-bold text-amber-400 transition hover:bg-[#0f1d36]/90 hover:shadow-lg active:scale-[0.98] disabled:opacity-50"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -399,6 +402,13 @@ function LessonDetailPage() {
                   </svg>
                 </Link>
               )}
+              <button
+                onClick={handleToggleComplete}
+                disabled={toggling}
+                className="mt-4 cursor-pointer text-sm font-medium text-gray-500 underline underline-offset-2 transition hover:text-gray-700 disabled:opacity-50"
+              >
+                Mark as Incomplete
+              </button>
             </div>
           )}
         </section>

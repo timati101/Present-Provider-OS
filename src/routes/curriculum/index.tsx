@@ -1,4 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
+import { useAuth } from "~/components/AuthContext";
+import { getCompletedLessons } from "~/lib/progress-fns";
 import { createServerFn } from "@tanstack/react-start";
 import { sql } from "~/db";
 import { ProgressBar } from "~/components/ProgressBar";
@@ -166,6 +169,12 @@ const getModules = createServerFn({ method: "GET" }).handler(async (): Promise<M
   }));
 });
 
+const getAllLessons = createServerFn({ method: "GET" }).handler(async (): Promise<{ id: string; module_id: string }[]> => {
+  const db = sql();
+  const rows = await db`SELECT id, module_id FROM lessons ORDER BY sort_order`;
+  return rows.map((r) => ({ id: String(r.id), module_id: String(r.module_id) }));
+});
+
 /* ── Route ─────────────────────────────────────────────────── */
 export const Route = createFileRoute("/curriculum/")({
   loader: () => getModules(),
@@ -175,6 +184,32 @@ export const Route = createFileRoute("/curriculum/")({
 /* ── Page component ────────────────────────────────────────── */
 function CurriculumPage() {
   const modules = Route.useLoaderData();
+  const { user } = useAuth();
+  const [completedIds, setCompletedIds] = useState<string[]>([]);
+  const [allLessonsData, setAllLessonsData] = useState<{ id: string; module_id: string }[]>([]);
+
+  useEffect(() => {
+    // Load completed lessons
+    if (user) {
+      getCompletedLessons().then((r) => setCompletedIds(r.completedLessonIds)).catch(() => {});
+    } else {
+      const stored = localStorage.getItem("completed-lessons");
+      if (stored) {
+        try { const arr = JSON.parse(stored); if (Array.isArray(arr)) setCompletedIds(arr); } catch {}
+      }
+    }
+    // Load all lessons for progress calculation
+    getAllLessons().then((rows) => setAllLessonsData(rows)).catch(() => {});
+  }, [user]);
+
+  // Compute per-module progress
+  const completedSet = new Set(completedIds);
+  const getModuleProgress = (moduleId: string) => {
+    const moduleLessons = allLessonsData.filter((l) => l.module_id === moduleId);
+    if (moduleLessons.length === 0) return { percent: 0, completed: 0, total: 0 };
+    const completed = moduleLessons.filter((l) => completedSet.has(l.id)).length;
+    return { percent: Math.round((completed / moduleLessons.length) * 100), completed, total: moduleLessons.length };
+  };
 
   // Group modules by category
   const grouped = new Map<string, Module[]>();
@@ -294,7 +329,7 @@ function CurriculumPage() {
                         <div className="mt-auto" />
 
                         {/* Progress bar — 0% until auth is wired */}
-                        <ProgressBar percent={0} />
+                        {(() => { const p = getModuleProgress(mod.id); return <ProgressBar percent={p.percent} label={`${p.completed}/${p.total} lessons`} />; })()}
                       </Link>
                     ))}
                   </div>
