@@ -13,6 +13,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ShutdownRouteImport } from './routes/shutdown'
 import { Route as ResourcesRouteImport } from './routes/resources'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as DebtCalculatorRouteImport } from './routes/debt-calculator'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ChallengesRouteImport } from './routes/challenges'
 import { Route as BrotherhoodRouteImport } from './routes/brotherhood'
@@ -40,6 +41,11 @@ const ResourcesRoute = ResourcesRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DebtCalculatorRoute = DebtCalculatorRouteImport.update({
+  id: '/debt-calculator',
+  path: '/debt-calculator',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/brotherhood': typeof BrotherhoodRoute
   '/challenges': typeof ChallengesRoute
   '/dashboard': typeof DashboardRoute
+  '/debt-calculator': typeof DebtCalculatorRoute
   '/login': typeof LoginRoute
   '/resources': typeof ResourcesRoute
   '/shutdown': typeof ShutdownRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByTo {
   '/brotherhood': typeof BrotherhoodRoute
   '/challenges': typeof ChallengesRoute
   '/dashboard': typeof DashboardRoute
+  '/debt-calculator': typeof DebtCalculatorRoute
   '/login': typeof LoginRoute
   '/resources': typeof ResourcesRoute
   '/shutdown': typeof ShutdownRoute
@@ -118,6 +126,7 @@ export interface FileRoutesById {
   '/brotherhood': typeof BrotherhoodRoute
   '/challenges': typeof ChallengesRoute
   '/dashboard': typeof DashboardRoute
+  '/debt-calculator': typeof DebtCalculatorRoute
   '/login': typeof LoginRoute
   '/resources': typeof ResourcesRoute
   '/shutdown': typeof ShutdownRoute
@@ -134,6 +143,7 @@ export interface FileRouteTypes {
     | '/brotherhood'
     | '/challenges'
     | '/dashboard'
+    | '/debt-calculator'
     | '/login'
     | '/resources'
     | '/shutdown'
@@ -148,6 +158,7 @@ export interface FileRouteTypes {
     | '/brotherhood'
     | '/challenges'
     | '/dashboard'
+    | '/debt-calculator'
     | '/login'
     | '/resources'
     | '/shutdown'
@@ -162,6 +173,7 @@ export interface FileRouteTypes {
     | '/brotherhood'
     | '/challenges'
     | '/dashboard'
+    | '/debt-calculator'
     | '/login'
     | '/resources'
     | '/shutdown'
@@ -177,6 +189,7 @@ export interface RootRouteChildren {
   BrotherhoodRoute: typeof BrotherhoodRoute
   ChallengesRoute: typeof ChallengesRoute
   DashboardRoute: typeof DashboardRoute
+  DebtCalculatorRoute: typeof DebtCalculatorRoute
   LoginRoute: typeof LoginRoute
   ResourcesRoute: typeof ResourcesRoute
   ShutdownRoute: typeof ShutdownRoute
@@ -215,6 +228,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/debt-calculator': {
+      id: '/debt-calculator'
+      path: '/debt-calculator'
+      fullPath: '/debt-calculator'
+      preLoaderRoute: typeof DebtCalculatorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -281,6 +301,7 @@ const rootRouteChildren: RootRouteChildren = {
   BrotherhoodRoute: BrotherhoodRoute,
   ChallengesRoute: ChallengesRoute,
   DashboardRoute: DashboardRoute,
+  DebtCalculatorRoute: DebtCalculatorRoute,
   LoginRoute: LoginRoute,
   ResourcesRoute: ResourcesRoute,
   ShutdownRoute: ShutdownRoute,

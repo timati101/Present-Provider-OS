@@ -7,6 +7,7 @@ const navLinks = [
   { href: "/brotherhood", label: "Brotherhood" },
   { href: "/resources", label: "Resources" },
   { href: "/shutdown", label: "Shutdown" },
+  { href: "/debt-calculator", label: "Debt Calc" },
 ];
 
 export function Nav() {
