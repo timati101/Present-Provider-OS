@@ -187,7 +187,7 @@ function CurriculumPage() {
   return (
     <div className="min-h-screen bg-[#faf7f2]">
       {/* ── Header ──────────────────────────────────────── */}
-      <header className="bg-[#0f1d36] px-6 pb-16 pt-24 text-center text-white sm:pb-20 sm:pt-28">
+      <header className="relative overflow-hidden bg-[#0f1d36] px-6 pb-16 pt-24 text-center text-white sm:pb-20 sm:pt-28">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0f1d36] via-[#0f1d36] to-[#0f1d36]/95" />
         <div className="absolute -top-16 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-amber-500/10 blur-3xl" />
         <div className="relative mx-auto max-w-3xl">
