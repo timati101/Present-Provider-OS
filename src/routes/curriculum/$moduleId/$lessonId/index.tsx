@@ -136,11 +136,13 @@ export const Route = createFileRoute("/curriculum/$moduleId/$lessonId/")({
 function LessonDetailPage() {
   const data = Route.useLoaderData();
   const { moduleId, lessonId } = Route.useParams();
+  const { user } = useAuth();
 
   // ── Client-side state ───────────────────────────────────
   const [completedSteps, setCompletedSteps] = useState<Set<string>>(new Set());
   const [reflections, setReflections] = useState<Record<string, string>>({});
   const [markedComplete, setMarkedComplete] = useState(false);
+  const [toggling, setToggling] = useState(false);
 
   const toggleStep = (index: number) => {
     const id = "step-".concat(String(index));
@@ -155,6 +157,36 @@ function LessonDetailPage() {
   const handleReflectionChange = (index: number, value: string) => {
     setReflections((prev) => ({ ...prev, ["prompt-".concat(String(index))]: value }));
   };
+
+  const handleToggleComplete = useCallback(async () => {
+    setToggling(true);
+    try {
+      const { lesson } = data;
+      if (!lesson) return;
+      if (user) {
+        const result = await toggleLessonComplete({ data: { lessonId: lesson.id } });
+        setMarkedComplete(result.completed);
+      } else {
+        const stored = localStorage.getItem("completed-lessons");
+        let arr: string[] = [];
+        if (stored) {
+          try { arr = JSON.parse(stored); } catch { arr = []; }
+        }
+        if (!Array.isArray(arr)) arr = [];
+        if (markedComplete) {
+          arr = arr.filter((id) => id !== lesson.id);
+        } else {
+          if (!arr.includes(lesson.id)) arr.push(lesson.id);
+        }
+        localStorage.setItem("completed-lessons", JSON.stringify(arr));
+        setMarkedComplete(!markedComplete);
+      }
+    } catch (err) {
+      console.error("Failed to toggle lesson completion:", err);
+    } finally {
+      setToggling(false);
+    }
+  }, [user, data, markedComplete]);
 
   // ── 404 states ──────────────────────────────────────────
   if (!data.module) {
