@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useAuth } from "~/components/AuthContext";
 
-const navLinks = [
+const baseNavLinks = [
   { href: "/curriculum", label: "Curriculum" },
   { href: "/challenges", label: "Challenges" },
   { href: "/brotherhood", label: "Brotherhood" },
@@ -11,9 +11,19 @@ const navLinks = [
   { href: "/family-vision", label: "Vision" },
 ];
 
+const navLinkClass =
+  "rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-amber-50 hover:text-amber-700";
+
 export function Nav() {
   const [open, setOpen] = useState(false);
   const { user, loading, logout } = useAuth();
+
+  const navLinks = useMemo(() => {
+    if (user) {
+      return [{ href: "/dashboard", label: "Dashboard" }, ...baseNavLinks];
+    }
+    return baseNavLinks;
+  }, [user]);
 
   return (
     <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur">
@@ -32,7 +42,7 @@ export function Nav() {
             <a
               key={link.href}
               href={link.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-amber-50 hover:text-amber-700"
+              className={navLinkClass}
             >
               {link.label}
             </a>

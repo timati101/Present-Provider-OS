@@ -1,6 +1,7 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { readFile } from "node:fs/promises";
+import { useState } from "react";
 import { useAuth } from "~/components/AuthContext";
 
 const getBusinessName = createServerFn({ method: "GET" }).handler(async () => {
@@ -186,6 +187,7 @@ function Home() {
   const businessName = Route.useLoaderData();
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [ctaEmail, setCtaEmail] = useState("");
 
   // Loading state — avoid flash of landing page for auth users
   if (loading) {
@@ -378,14 +380,32 @@ function Home() {
             Get early access to the Present Provider operating system. No
             commitment — just a system that works as hard as you do.
           </p>
-          <div className="mt-10">
-            <a
-              href="/signup"
-              className="inline-block rounded-xl bg-amber-500 px-8 py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 active:bg-amber-700"
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const trimmed = ctaEmail.trim();
+              if (!trimmed) return;
+              router.navigate({
+                to: "/signup",
+                search: { email: trimmed },
+              });
+            }}
+            className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row"
+          >
+            <input
+              type="email"
+              value={ctaEmail}
+              onChange={(e) => setCtaEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="flex-1 rounded-xl border border-gray-300 px-4 py-3.5 text-base text-gray-900 placeholder-gray-400 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
+            />
+            <button
+              type="submit"
+              className="cursor-pointer rounded-xl bg-amber-500 px-8 py-3.5 text-base font-semibold text-white shadow-sm transition hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500/50 active:bg-amber-700"
             >
-              Get started free
-            </a>
-          </div>
+              Get Started
+            </button>
+          </form>
         </div>
       </section>
 

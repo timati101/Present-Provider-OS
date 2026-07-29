@@ -1,20 +1,31 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "~/components/AuthContext";
 
 export const Route = createFileRoute("/signup")({
+  validateSearch: (params: Record<string, unknown>) => ({
+    email: typeof params.email === "string" ? params.email : undefined,
+  }),
   component: SignupPage,
 });
 
 function SignupPage() {
   const { user, signup } = useAuth();
   const router = useRouter();
+  const search = Route.useSearch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  // Pre-fill email from search param
+  useEffect(() => {
+    if (search.email) {
+      setEmail(search.email);
+    }
+  }, [search.email]);
 
   // Redirect if already logged in
   if (user) {

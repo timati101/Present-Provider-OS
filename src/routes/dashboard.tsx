@@ -168,6 +168,10 @@ function DashboardPage() {
   };
 
   /* ── Action cards ─────────────────────────────────── */
+  const [calendarExpanded, setCalendarExpanded] = useState(false);
+  const [calendarEmail, setCalendarEmail] = useState("");
+  const [calendarSubmitted, setCalendarSubmitted] = useState(false);
+
   const actionCards = [
     {
       icon: "🌅",
@@ -194,6 +198,14 @@ function DashboardPage() {
       to: "/brotherhood",
     },
   ];
+
+  const handleCalendarNotify = (e: React.FormEvent) => {
+    e.preventDefault();
+    const trimmed = calendarEmail.trim();
+    if (!trimmed) return;
+    localStorage.setItem("pp-calendar-waitlist", trimmed);
+    setCalendarSubmitted(true);
+  };
 
   /* ── Render ───────────────────────────────────────── */
   return (
@@ -343,7 +355,7 @@ function DashboardPage() {
           <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-amber-600">
             Today&rsquo;s Actions
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {actionCards.map((card) => (
               <a
                 key={card.to}
@@ -363,6 +375,70 @@ function DashboardPage() {
                 </div>
               </a>
             ))}
+
+            {/* ── Family Calendar card (expandable) ──────── */}
+            <div
+              className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition hover:border-amber-300 hover:shadow-md"
+            >
+              <button
+                onClick={() => setCalendarExpanded(!calendarExpanded)}
+                className="flex w-full cursor-pointer items-start gap-4 text-left"
+              >
+                <span className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-amber-50 text-2xl">
+                  📅
+                </span>
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base font-semibold text-[#0f1d36]">
+                      Family Calendar
+                    </h3>
+                    <span className="inline-block rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-600">
+                      Coming Soon
+                    </span>
+                  </div>
+                  <p className="mt-1 text-sm leading-relaxed text-gray-500">
+                    Block family time on your calendar
+                  </p>
+                </div>
+              </button>
+
+              {/* Expandable section */}
+              {calendarExpanded && (
+                <div className="mt-4 border-t border-gray-100 pt-4">
+                  {calendarSubmitted ? (
+                    <p className="text-sm font-medium text-green-600">
+                      You&rsquo;re on the list! 🎉
+                    </p>
+                  ) : (
+                    <>
+                      <p className="mb-3 text-sm text-gray-600">
+                        We&rsquo;re building Google &amp; Apple Calendar
+                        integration. Enter your email for early access.
+                      </p>
+                      <form
+                        onSubmit={handleCalendarNotify}
+                        className="flex gap-2"
+                      >
+                        <input
+                          type="email"
+                          value={calendarEmail}
+                          onChange={(e) => setCalendarEmail(e.target.value)}
+                          placeholder="you@example.com"
+                          required
+                          className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30"
+                        />
+                        <button
+                          type="submit"
+                          className="cursor-pointer rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-amber-600"
+                        >
+                          Notify Me
+                        </button>
+                      </form>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </section>
 
