@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { readFile } from "node:fs/promises";
+import { useAuth } from "~/components/AuthContext";
 
 const getBusinessName = createServerFn({ method: "GET" }).handler(async () => {
   try {
@@ -183,6 +184,23 @@ const features = [
 /* ── Main component ─────────────────────────────────────── */
 function Home() {
   const businessName = Route.useLoaderData();
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  // Loading state — avoid flash of landing page for auth users
+  if (loading) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center bg-[#faf7f2]">
+        <div className="mx-auto h-10 w-10 animate-spin rounded-full border-4 border-amber-200 border-t-amber-500" />
+      </div>
+    );
+  }
+
+  // Logged-in users go to dashboard
+  if (user) {
+    router.navigate({ to: "/dashboard", replace: true });
+    return null;
+  }
 
   return (
     <div className="min-h-dvh bg-[#faf7f2] text-gray-800">

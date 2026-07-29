@@ -198,6 +198,26 @@ function DashboardPage() {
   /* ── Render ───────────────────────────────────────── */
   return (
     <div className="min-h-dvh bg-[#faf7f2]">
+      {/* ── Status Ribbon ────────────────────────────── */}
+      <div className="sticky top-0 z-30 border-b border-amber-500/20 bg-gradient-to-r from-[#0f1d36] via-[#132744] to-[#0f1d36]">
+        <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-2">
+          {/* Streak */}
+          <div className="flex items-center gap-2 text-xs font-medium text-gray-300">
+            <span className="text-sm">🔥</span>
+            <span>
+              {streak > 0 ? `${streak}-Day Streak` : "Start your streak"}
+            </span>
+          </div>
+          {/* Progress */}
+          <div className="flex items-center gap-2 text-xs font-medium text-gray-300">
+            <span className="text-sm">📚</span>
+            <span>
+              {completedLessons.length}/{totalLessons} lessons
+            </span>
+          </div>
+        </div>
+      </div>
+
       {/* ── Section A — Welcome Header ────────────────── */}
       <header className="relative overflow-hidden bg-[#0f1d36] px-6 pb-12 pt-16 sm:pb-16 sm:pt-24">
         <div className="absolute inset-0 bg-gradient-to-b from-[#0f1d36] to-[#0f1d36]/95" />
