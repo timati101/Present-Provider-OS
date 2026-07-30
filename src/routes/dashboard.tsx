@@ -58,6 +58,68 @@ interface DailyIntention {
   date: string;
 }
 
+/* ── Shutdown ribbon pill ────────────────────────────── */
+
+function ShutdownRibbonPill() {
+  const [shutdownDone, setShutdownDone] = useState(false);
+  const [completionTime, setCompletionTime] = useState("");
+  const { user } = useAuth();
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("shutdown-streak");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        const today = getTodayStr();
+        if (parsed.completedToday && parsed.lastDate === today) {
+          setShutdownDone(true);
+          setCompletionTime(parsed.completionTime || "");
+          return;
+        }
+      }
+    } catch {
+      /* ignore */
+    }
+    setShutdownDone(false);
+  }, []);
+
+  if (!user) {
+    return (
+      <a
+        href="/signup"
+        className="flex items-center gap-1.5 rounded-full border border-amber-400/30 bg-amber-400/10 px-3 py-1 text-xs font-semibold text-amber-300 transition hover:bg-amber-400/20"
+      >
+        <span>⚡</span>
+        <span className="hidden sm:inline">Sign up to track your progress</span>
+        <span className="sm:hidden">Sign Up</span>
+      </a>
+    );
+  }
+
+  if (shutdownDone) {
+    return (
+      <div className="flex items-center gap-1.5 text-xs font-medium text-green-400">
+        <span className="text-sm">✓</span>
+        <span className="hidden sm:inline">
+          Shutdown Done{completionTime ? ` at ${completionTime}` : ""}
+        </span>
+        <span className="sm:hidden">Done</span>
+      </div>
+    );
+  }
+
+  return (
+    <a
+      href="/shutdown"
+      className="flex animate-[pulse-glow_2s_ease-in-out_infinite] items-center gap-1.5 rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-1 text-xs font-semibold text-amber-300 transition hover:bg-amber-400/20"
+    >
+      <span>⚠️</span>
+      <span className="hidden sm:inline">Complete Shutdown</span>
+      <span className="sm:hidden">Shutdown</span>
+    </a>
+  );
+}
+
 /* ── Page component ──────────────────────────────────── */
 
 function DashboardPage() {
@@ -218,22 +280,47 @@ function DashboardPage() {
       {/* ── Status Ribbon ────────────────────────────── */}
       <div className="sticky top-0 z-30 border-b border-amber-500/20 bg-gradient-to-r from-[#0f1d36] via-[#132744] to-[#0f1d36]">
         <div className="mx-auto flex max-w-4xl items-center justify-between px-6 py-2">
-          {/* Streak */}
-          <div className="flex items-center gap-2 text-xs font-medium text-gray-300">
-            <span className="text-sm">🔥</span>
-            <span>
+          {/* Streak — made more prominent with amber glow */}
+          <div className="flex items-center gap-2 text-xs font-medium">
+            <span className={`text-sm ${streak > 0 ? "animate-[fire-flicker_1.5s_ease-in-out_infinite]" : ""}`}>
+              🔥
+            </span>
+            <span
+              className={`${
+                streak > 0
+                  ? "text-amber-300 drop-shadow-[0_0_6px_rgba(251,191,36,0.4)]"
+                  : "text-gray-300"
+              }`}
+            >
               {streak > 0 ? `${streak}-Day Streak` : "Start your streak"}
             </span>
           </div>
+
+          {/* Divider */}
+          <div className="hidden h-4 w-px bg-amber-500/20 sm:block" />
+
           {/* Progress */}
-          <div className="flex items-center gap-2 text-xs font-medium text-gray-300">
+          <div className="hidden items-center gap-2 text-xs font-medium text-gray-300 sm:flex">
             <span className="text-sm">📚</span>
             <span>
               {completedLessons.length}/{totalLessons} lessons
             </span>
           </div>
+
+          {/* Divider */}
+          <div className="hidden h-4 w-px bg-amber-500/20 sm:block" />
+
+          {/* Shutdown CTA */}
+          <ShutdownRibbonPill />
         </div>
       </div>
+
+      <style>{`
+        @keyframes fire-flicker {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.18); }
+        }
+      `}</style>
 
       {/* ── Section A — Welcome Header ────────────────── */}
       <header className="relative overflow-hidden bg-[#0f1d36] px-6 pb-12 pt-16 sm:pb-16 sm:pt-24">

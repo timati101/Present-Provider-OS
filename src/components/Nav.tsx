@@ -7,7 +7,7 @@ const baseNavLinks = [
   { href: "/brotherhood", label: "Brotherhood" },
   { href: "/resources", label: "Resources" },
   { href: "/shutdown", label: "Shutdown" },
-  { href: "/debt-calculator", label: "Debt Calc" },
+  { href: "/debt-calculator", label: "Finance" },
   { href: "/family-vision", label: "Vision" },
 ];
 
