@@ -526,7 +526,7 @@ function DebtCalculatorPage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12">
+      <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         {/* ── Debt list ─────────────────────────────────── */}
         <section className="mb-8">
           <div className="mb-4 flex items-center justify-between">

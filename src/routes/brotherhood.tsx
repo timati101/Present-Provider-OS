@@ -374,7 +374,7 @@ function BrotherhoodPage() {
       </div>
 
       {/* ═══════════ Main Content ═══════════ */}
-      <main className="mx-auto max-w-3xl px-6 py-8">
+      <main className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         {/* ── Post Composer ─────────────────────────────── */}
         <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
           <h2 className="flex items-center gap-2 text-lg font-bold text-gray-800">

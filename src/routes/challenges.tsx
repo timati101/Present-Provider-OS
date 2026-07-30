@@ -266,7 +266,7 @@ function ChallengesPage() {
       </header>
 
       {/* ── Streak Banner ────────────────────────────────── */}
-      <div className="mx-auto -mt-8 max-w-4xl px-6">
+      <div className="mx-auto -mt-8 max-w-6xl px-6">
         <div className="rounded-2xl border border-amber-200/50 bg-white p-6 shadow-lg sm:p-8">
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-between">
             <div>
@@ -296,7 +296,7 @@ function ChallengesPage() {
       </div>
 
       {/* ── Tabs ──────────────────────────────────────────── */}
-      <div className="mx-auto max-w-4xl px-6 py-10">
+      <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         {/* Tab buttons */}
         <div className="mb-8 flex rounded-xl bg-gray-100 p-1">
           <button

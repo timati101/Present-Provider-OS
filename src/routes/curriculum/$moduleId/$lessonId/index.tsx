@@ -291,7 +291,7 @@ function LessonDetailPage() {
       </header>
 
       {/* Content body */}
-      <article className="mx-auto max-w-3xl px-6 py-12 sm:py-16">
+      <article className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         {/* ── Lesson content ─────────────────────────────── */}
         <section className="mb-16">
           {paragraphs.map((para, i) => (

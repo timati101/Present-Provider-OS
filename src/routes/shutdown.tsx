@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ProgressBar } from "../components/ProgressBar";
-import { useAuth } from "../components/AuthContext";
+import { ProgressBar } from "~/components/ProgressBar";
+import { useAuth } from "~/components/AuthContext";
 
 /* ── Types & constants ─────────────────────────────────── */
 

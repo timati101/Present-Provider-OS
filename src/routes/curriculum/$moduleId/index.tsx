@@ -277,7 +277,7 @@ function ModuleDetailPage() {
         </div>
       </header>
 
-      <div className="mx-auto max-w-4xl px-6 py-10 sm:py-14">
+      <div className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         {/* ── Core Idea callout ──────────────────────────── */}
         <div className="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-white p-6 shadow-sm sm:p-8">
           <div className="flex items-start gap-4">

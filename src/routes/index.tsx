@@ -356,7 +356,7 @@ function Home() {
                 body: "You're carrying the weight of two roles. Present Provider helps you protect the few hours you have so every minute with your kids counts.",
               },
             ].map((item, i) => (
-              <div key={i} className="rounded-2xl border border-white/10 bg-white/5 p-7 text-left backdrop-blur-sm">
+              <div key={i} className="rounded-2xl border border-amber-500/20 bg-white/5 p-7 text-left backdrop-blur-sm">
                 <h3 className="text-xl font-bold text-amber-400">{item.title}</h3>
                 <p className="mt-3 leading-relaxed text-gray-300">{item.body}</p>
               </div>
