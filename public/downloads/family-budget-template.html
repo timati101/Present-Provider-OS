@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Budget Template — Present Provider</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a2e; background: #fff; }
+  header { background: #0f1d36; color: #fff; padding: 2rem 1.5rem; text-align: center; }
+  header h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.25rem; }
+  header p { color: #f59e0b; font-size: 0.85rem; font-weight: 500; }
+  main { max-width: 700px; margin: 0 auto; padding: 2rem 1.5rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 1rem; }
+  th { background: #0f1d36; color: #fff; padding: 0.6rem 0.5rem; font-size: 0.75rem; text-transform: uppercase; }
+  td { border: 1px solid #e0e0e0; padding: 0.45rem 0.5rem; }
+  td input { width: 100%; border: none; font-size: 0.85rem; padding: 0.2rem; background: transparent; }
+  .section-header { background: #fef3c7; font-weight: 700; color: #0f1d36; }
+  .total-row { background: #e8f5e9; font-weight: 700; }
+  .total-row td { border-top: 2px solid #0f1d36; }
+  footer { text-align: center; padding: 2rem 1rem; font-size: 0.8rem; color: #888; border-top: 1px solid #eee; }
+  footer span { color: #f59e0b; font-weight: 600; }
+  @media print {
+    header { padding: 1rem; } main { padding: 1rem; }
+    footer { display: none; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Family Budget Template</h1>
+  <p>Present Provider — The Anti-Budget Approach</p>
+</header>
+<main>
+  <table>
+    <thead><tr><th>Category</th><th>Budgeted</th><th>Actual</th></tr></thead>
+    <tbody>
+      <tr class="section-header"><td colspan="3">💰 Income</td></tr>
+      <tr><td>Primary Income</td><td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$"></td></tr>
+      <tr><td>Additional Income</td><td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$"></td></tr>
+      <tr class="total-row"><td>Total Income</td><td></td><td></td></tr>
+      <tr class="section-header"><td colspan="3">🏠 Housing</td></tr>
+      <tr><td>Rent / Mortgage</td><td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$"></td></tr>
+      <tr><td>Utilities</td><td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$"></td></tr>
+      <tr class="section-header"><td colspan="3">🍽 Food</td></tr>
+      <tr><td>Groceries</td><td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$"></td></tr>
+      <tr><td>Dining Out</td><td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$"></td></tr>
+      <tr class="section-header"><td colspan="3">🚗 Transportation</td></tr>
+      <tr><td>Car Payment / Gas</td><td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$"></td></tr>
+      <tr class="section-header"><td colspan="3">💳 Debt Payments</td></tr>
+      <tr><td>Minimum Payments</td><td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$"></td></tr>
+      <tr><td>Extra Debt Payoff</td><td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$"></td></tr>
+      <tr class="section-header"><td colspan="3">🏦 Savings</td></tr>
+      <tr><td>Emergency Fund</td><td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$"></td></tr>
+      <tr><td>Investments</td><td><input type="text" placeholder="$"></td><td><input type="text" placeholder="$"></td></tr>
+      <tr class="total-row"><td><strong>Total Expenses</strong></td><td></td><td></td></tr>
+      <tr class="total-row"><td><strong>Surplus / Deficit</strong></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.85rem;color:#666;">💡 Three-category rule: Essentials → Guilt-Free Spending → Goals. Automate what matters, and don't track every coffee.</p>
+</main>
+<footer>© <span>presentprovider.com</span></footer>
+</body>
+</html>
